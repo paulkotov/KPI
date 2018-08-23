@@ -1,0 +1,4 @@
+--require test/source-map.js
+--webpack-config test/webpack.test.js
+--colors
+src/**/*.test.js

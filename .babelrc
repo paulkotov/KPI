@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "es2015",
+    "react",
+    "stage-0"
+  ],
+  "ignore": [
+    "node_modules/**/*.js"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
+}
