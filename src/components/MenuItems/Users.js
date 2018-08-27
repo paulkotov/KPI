@@ -54,63 +54,6 @@ const newUser = {
   pos: ''
 };
 
-// class EditRule extends Component {
-//   static propTypes = {
-//     value: PropTypes.string
-//   };
-
-//   state = {
-//     value: this.props.value,
-//     treeData: [{
-//       label: 'Все',
-//       value: 'all',
-//       key: '1',
-//       children: [{
-//         label: 'Организация',
-//         value: 'org',
-//         key: '1-1',
-//         children: [{
-//           label: 'Государственная', value: 'gov', key: '1-1-1' 
-//         }, {
-//           label: 'Общественная', value: 'civ', key: '1-1-2'
-//         }, {
-//           label: 'Дочерняя', value: 'child', key: '1-1-3'
-//         }, {
-//           label: 'Частная', value: 'priv', key: '1-1-4'
-//         }]
-//       }, {
-//         label: 'Подразделение',
-//         value: 'dep',
-//         key: '1-2',
-//       }, {
-//         label: 'Уровень',
-//         value: 'level',
-//         key: '1-3'
-//       }]
-//     }],
-//   };
-
-//   onChange = (value) => {
-//     console.log(arguments);
-//     this.setState({ value });
-//   }
-
-//   render(){
-//     const { treeData } = this.state;
-//     return (
-//       <TreeSelect
-//         style={{ width: 300 }}
-//         value={this.state.value}
-//         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-//         treeData={treeData}
-//         placeholder="Please select"
-//         treeDefaultExpandAll
-//         onChange={this.onChange}
-//       />
-//     );
-//   }
-// }
-
 class Users extends PureComponent{
   state = {
     data: {
@@ -218,44 +161,54 @@ class Users extends PureComponent{
 
   async componentDidMount(){
     const { addData } = this.props.services;
-    this.setState({ count: this.state.data.savedData.length });
-    let users = await loadUsers();
-    // console.log(users);
-    addData(users);
     const { data } = this.props;
-    this.setState({
-      data: {
-        ...this.state.data,
-        initial: data,
-        savedData: data.map( (item, index) => { 
-          if (item.comment !== null){
-            const comments = getUserInfo(item.comment);
-            return {
-              ...item, 
-              name: checkIfNull(comments[0])+' '+checkIfNull(comments[1])+' '+checkIfNull(comments[2]),
-              dept: checkIfNull(comments[3]),
-              pos: checkIfNull(comments[4]),
-              contacts: checkIfNull(comments[5])+' '+checkIfNull(comments[6]),
-              key: ++index
-            }; 
-          } else return { 
-            ...item,               
-            key: ++index 
-          };
-        })
-      }
-    });
-      
-    this.setState({
-      count: data.length
-    });
-    let depts = await loadStructData();
-    this.setState({
-      data: {
-        ...this.state.data,
-        depts: setRules(depts)
-      }
-    });
+    let users;
+    let depts;
+
+    this.setState({ count: this.state.data.savedData.length });
+    try {
+      users = await loadUsers();
+      depts = await loadStructData();
+    } catch(e) {
+      console.log(e);
+    }
+    // console.log(users);
+    if (!!users) {
+      addData(users);
+      this.setState({
+        data: {
+          ...this.state.data,
+          initial: data,
+          savedData: data.map( (item, index) => { 
+            if (item.comment !== null){
+              const comments = getUserInfo(item.comment);
+              return {
+                ...item, 
+                name: checkIfNull(comments[0])+' '+checkIfNull(comments[1])+' '+checkIfNull(comments[2]),
+                dept: checkIfNull(comments[3]),
+                pos: checkIfNull(comments[4]),
+                contacts: checkIfNull(comments[5])+' '+checkIfNull(comments[6]),
+                key: ++index
+              }; 
+            } else return { 
+              ...item,               
+              key: ++index 
+            };
+          })
+        }
+      });
+    }
+    if (!!depts){
+      this.setState({
+        count: data.length
+      });
+      this.setState({
+        data: {
+          ...this.state.data,
+          depts: setRules(depts)
+        }
+      });
+    }  
   }
   
   componentDidUpdate(prevProps){

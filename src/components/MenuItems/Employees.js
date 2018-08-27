@@ -226,7 +226,7 @@ class Employees extends Component {
   };
 
   handleAdd = employee => {
-
+    console.log(employee);
   };
 
   handleSave = () => {

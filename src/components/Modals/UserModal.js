@@ -211,6 +211,21 @@ UserModal.propTypes = {
   form: PropTypes.object
 };
 
+UserModal.defaultProps = {
+  data: {
+    login: '',
+    password: '',
+    role: '',
+    id: '',
+    name: '',
+    otch: '',
+    surname: '',
+    org: '',
+    dept: '',
+    pos: ''
+  }
+};
+
 const WrappedDemo = Form.create()(UserModal);
 
 export default WrappedDemo;

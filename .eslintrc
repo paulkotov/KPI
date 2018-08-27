@@ -24,6 +24,7 @@
       "no-console":"warn",
       "no-debugger":"off",
       "react/display-name" : "warn",
+      "no-extra-boolean-cast": "warn",
       "indent": [
         "error",
         2,
