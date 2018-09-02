@@ -1,16 +1,35 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Structure from './MenuItems/Structure';
-import Users from './MenuItems/Users';
+// import Structure from './MenuItems/Structure';
+// import Spinner from '../components/Shared/Spinner';
 import Employees from './MenuItems/Employees';
 import Indexes from './MenuItems/Indexes';
 import Plan from './MenuItems/Plan';
 import Fact from './MenuItems/Fact';
 import Summary from './MenuItems/Summary';
 import Settings from './MenuItems/Settings';
+import Loadable from 'react-loadable';
 
-class MainComp extends Component{
+const UserComp = Loadable({
+  loader: () => import('./MenuItems/Users'),
+  loading: () => null,
+  render: (loaded, props) => {
+    let Comp = loaded.default;
+    return <Comp {...props} />;
+  }
+});
+
+const StructComp = Loadable({
+  loader: () => import('./MenuItems/Structure'),
+  loading: () => null,
+  render: (loaded, props) => {
+    let Comp = loaded.default;
+    return <Comp {...props} />;
+  }
+});
+
+class MainComp extends PureComponent{
   constructor(props){
     super(props);
     this.state = {
@@ -35,22 +54,22 @@ class MainComp extends Component{
       menu
      } = this.props;
     switch (menu){
-      case "1": 
+      case '1': 
       default :
-        return <Users data={ users } services={ usersActions }/>;
-      case "2":
-        return <Structure data={ structure } services={ structureActions }/>;
-      case "3":  
+        return <UserComp data={ users } services={ usersActions }/>;
+      case '2':
+        return <StructComp data={ structure } services={ structureActions }/>;
+      case '3':  
         return <Employees data={ employees }  services={ employeesActions }/>;
-      case "4":  
+      case '4':  
         return <Indexes data={ indexes } services={ indexesActions }/>;
-      case "5":  
+      case '5':  
         return <Plan data={ plan } services={ planActions }/>;
-      case "6":  
+      case '6':  
         return <Fact data={ fact } services={ factActions }/>;
-      case "7":
+      case '7':
         return <Summary data={ structure } />;
-      case "8":
+      case '8':
         return <Settings />;   
     }
   };

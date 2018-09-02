@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Popconfirm } from 'antd';
 import SortableTree, { addNodeUnderParent, removeNodeAtPath } from 'react-sortable-tree';
 import StructureModal from '../Modals/StructureModal';
 
@@ -9,6 +9,7 @@ import StructureModal from '../Modals/StructureModal';
 import { loadStructData, updateDept } from '../../lib/services/structure';
 
 import 'antd/lib/button/style/index.css';
+// import 'antd/lib/popconfirm/style/index.css';
 import 'antd/lib/style/index.css';
 import 'antd/dist/antd.css';
 import 'react-sortable-tree/style.css';
@@ -176,18 +177,6 @@ class Structure extends PureComponent {
               ),
               buttons: [
                 <Button
-                  onClick={ () => {
-                    this.toggleEditModal(); 
-                    this.setState({
-                      selectedNode: node
-                    });
-                  }
-                  }
-                  style={{ marginRight: 10+'px' }}
-                >
-                  <Icon type="plus-circle-o" />
-                </Button>,
-                <Button
                   onClick={() => {
                     this.toggleEditModal(); 
                     this.setState({
@@ -200,7 +189,20 @@ class Structure extends PureComponent {
                   <Icon type="edit" />
                 </Button>,
                 <Button
-                  onClick={() => {
+                  onClick={ () => {
+                    this.toggleEditModal(); 
+                    this.setState({
+                      selectedNode: node
+                    });
+                  }
+                  }
+                  style={{ marginRight: 10+'px' }}
+                >
+                  <Icon type="plus-circle-o" />
+                </Button>,
+                <Popconfirm
+                  title="Удалить?"
+                  onConfirm={() => {
                     this.setState(state => ({
                       treeData: removeNodeAtPath({
                         treeData: state.treeData,
@@ -210,16 +212,22 @@ class Structure extends PureComponent {
                     }));
                     this.setState({
                       deletedNodes: [
-                        ...this.deletedNodes,
+                        ...this.state.deletedNodes,
                         node
                       ]
                     });
                   }
                   }
-                  style={{ marginRight: 10+'px' }}
+                  onCancel={() => console.log('None')}
+                  okText="Да" cancelText="Нет"
                 >
-                  <Icon type="close-circle-o" />
-                </Button>,
+                  <Button
+                  type="danger"
+                    style={{ marginRight: 10+'px' }}
+                  >
+                    <Icon type="close-circle-o" />
+                  </Button>
+                </Popconfirm>,
               ],
             })}
           />

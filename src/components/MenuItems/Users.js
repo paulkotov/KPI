@@ -63,6 +63,10 @@ class Users extends PureComponent{
       selectedRows: [],
       depts: []
     },
+    filter: {
+      fio: '',
+      dept: ''
+    },
     tableStyles: {
       bordered: false,
       loading: false,
@@ -71,10 +75,6 @@ class Users extends PureComponent{
       showHeader,
       rowSelection: {},
       sorter: null
-    },
-    filter: {
-      fio: '',
-      dept: ''
     },
     currentUser: null,
     count: 0,
@@ -321,6 +321,11 @@ class Users extends PureComponent{
     });
   }
 
+  handleUpdate = () => {
+    this.props.services.getData();
+    this.forceUpdate();
+  }
+
   handleTableChange = (pagination, filters, sorter) => {
     // console.log('params', pagination, filters, sorter);
     const pager = { ...this.state.tableStyles.pagination };
@@ -330,6 +335,9 @@ class Users extends PureComponent{
 
     });
 
+  }
+  handleFilter = () => {
+    console.log('Filter');
   }
 
   render(){
@@ -370,7 +378,7 @@ class Users extends PureComponent{
         }
         <TableCont className="tablecont">
           <div style={{ dislay: 'flex', padding: 20+'px' }}>
-            <SearchPanel handler={null}/>
+            <SearchPanel handler={this.handleFilter}/>
             <EditorPanel enableSave={ selectedRows.length !== 0 }
                           enableUndo={ savedData.length !== this.state.data.initial.length }
                           saveChanges={this.handleSave} 
@@ -378,12 +386,20 @@ class Users extends PureComponent{
             />   
             { /* <Button className="editable-add-btn" type="primary"><a href="/reg">Добавить пользователя</a></Button> */} 
             <Button className="editable-add-btn" 
+                    type="primary"
                     onClick={ () => {
                       this.setState({
                         currentUser: null
                       });
                       this.toggleAddModal(); } }
-            >Добавить пользователя</Button> 
+            >
+              Добавить пользователя
+            </Button>
+            <Button className="editable-add-btn"
+                    onClick={ () => { this.handleUpdate(); } }
+            >
+              <Icon type="reload" />
+            </Button>  
             <div style={{ width: 1950+'px', overflow: 'auto' }}>
               <Table 
                     {...tableStyles} 

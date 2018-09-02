@@ -20,7 +20,7 @@ const defaultState = {
 
 const users = handleActions({
   ADD_USERS_DATA: (state, action) => ({
-    ...state, data: action.payload ? action.payload : null
+    ...state, data: action.payload ? action.payload : []
   }),
   GET_USERS_DATA: state => ({
     ...state
