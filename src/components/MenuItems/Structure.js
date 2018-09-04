@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon, Popconfirm } from 'antd';
-import SortableTree, { addNodeUnderParent, removeNodeAtPath } from 'react-sortable-tree';
+import SortableTree, { addNodeUnderParent, changeNodeAtPath, removeNodeAtPath } from 'react-sortable-tree';
 import StructureModal from '../Modals/StructureModal';
 
 // import { Spinner } from './Spinner';
@@ -41,7 +41,8 @@ class Structure extends PureComponent {
       isEditModalShown: false,
       selectedNode: null,
       editedNodes: [],
-      deletedNodes: []
+      deletedNodes: [],
+      modalTitle: ''
     };
   }
 
@@ -86,7 +87,7 @@ class Structure extends PureComponent {
   
 
   render() {
-    const { searchString, searchFocusIndex, searchFoundCount, isEditModalShown, selectedNode } = this.state;
+    const { searchString, searchFocusIndex, searchFoundCount, isEditModalShown, selectedNode, modalTitle } = this.state;
     const getNodeKey = ({ treeIndex }) => treeIndex;
         // Case insensitive search of `node.title`
     const customSearchMethod = ({ node, searchQuery }) =>
@@ -116,6 +117,7 @@ class Structure extends PureComponent {
             toggleEditModal={this.toggleEditModal} 
             nodeHandler={null}
             data={selectedNode}
+            title={modalTitle}
           /> 
         }
           <form style={{ display: 'inline-block' }}
@@ -180,7 +182,8 @@ class Structure extends PureComponent {
                   onClick={() => {
                     this.toggleEditModal(); 
                     this.setState({
-                      selectedNode: node
+                      selectedNode: node,
+                      modalTitle: 'Редактировать подразделение'
                     });
                   }
                   }
@@ -192,7 +195,8 @@ class Structure extends PureComponent {
                   onClick={ () => {
                     this.toggleEditModal(); 
                     this.setState({
-                      selectedNode: node
+                      selectedNode: node,
+                      modalTitle: 'Добавить подразделение'
                     });
                   }
                   }

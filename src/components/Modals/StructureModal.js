@@ -33,7 +33,7 @@ class StructureModal extends Component {
   }
 
   render() {
-    const { isEditModalShown, toggleEditModal } = this.props;
+    const { isEditModalShown, toggleEditModal, title } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { id, name, parent_id } = this.props.data;
 
@@ -41,7 +41,7 @@ class StructureModal extends Component {
       <div>
         <Modal
           width={650}
-          title="Edit department"
+          title={title}
           style={{ top: 20 }}
           visible={isEditModalShown}
           onCancel={() => toggleEditModal()}
@@ -100,6 +100,7 @@ class StructureModal extends Component {
 }
 
 StructureModal.propTypes = {
+  title: PropTypes.string,
   isEditModalShown : PropTypes.bool,
   toggleEditModal : PropTypes.func,
   dataHandler: PropTypes.func,

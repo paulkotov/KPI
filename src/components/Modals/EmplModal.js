@@ -33,7 +33,7 @@ class EmplModal extends Component {
   }
 
   render() {
-    const { isEditModalShown, toggleEditModal } = this.props;
+    const { isModalShown, toggleModal } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { id, dir, pos, empl, t_id, date1, date2, date3, param1, text } = this.props.data;
 
@@ -43,11 +43,11 @@ class EmplModal extends Component {
           width={650}
           title="Edit department"
           style={{ top: 20 }}
-          visible={isEditModalShown}
-          onCancel={() => toggleEditModal()}
+          visible={isModalShown}
+          onCancel={() => toggleModal()}
           onOk={() => console.log('OK')}
           footer ={[
-            <Button onClick={toggleEditModal}>Закрыть</Button>
+            <Button onClick={toggleModal}>Закрыть</Button>
           ]}
         > 
           <Form onSubmit={this.handleSubmit} className="ant-form">  
@@ -118,8 +118,8 @@ class EmplModal extends Component {
 }
 
 EmplModal.propTypes = {
-  isEditModalShown : PropTypes.bool,
-  toggleEditModal : PropTypes.func,
+  isModalShown : PropTypes.bool,
+  toggleModal : PropTypes.func,
   dataHandler: PropTypes.func,
   data: PropTypes.object,
   form: PropTypes.object

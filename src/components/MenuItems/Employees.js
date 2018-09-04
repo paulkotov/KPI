@@ -211,9 +211,10 @@ class Employees extends Component {
   }
 
   toggleModal = () => {
-    this.setState({
-      isModalShown: !this.state.isModalShown
-    });
+    this.setState(state => ({
+      isModalShown: !state.isModalShown
+    })
+  );
     // if (!this.state.isModalShown){
     //   this.setState({
     //     selectedNode: null
@@ -252,7 +253,7 @@ class Employees extends Component {
           {
             isModalShown &&
             <EmplModal isModalShown={isModalShown}
-              toggleAddModal={this.toggleModal}
+              toggleModal={this.toggleModal}
               dataHandler={this.handleAdd}
               data={currentEmployee === null ? newEmployee : currentEmployee }           
             />
@@ -283,7 +284,7 @@ class Employees extends Component {
                       this.setState({
                         currentEmployee: null
                       });
-                      this.toggleAddModal(); } }
+                      this.toggleModal(); } }
             >Добавить сотрудника</Button> 
             <Table {...this.state.tableSettings} columns={columns} 
                                                   dataSource={data} 

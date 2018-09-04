@@ -137,7 +137,7 @@ const columns = [{
     <div>
       <TableContext.Consumer>
         {
-          (_context) => (
+          (context) => (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button onClick={ () => console.log(record) }>
                 <Icon type="edit" />
@@ -167,13 +167,14 @@ class Indexes extends PureComponent{
         rowSelection: {},
         scroll: undefined
       },
+      data: [],
       isModalShown: false
     };
   }
 
   async componentDidMount(){
     // const { addData } = this.props.services;
-    const data = await loadEmplDataById(1);
+    // const data = await loadEmplDataById(1);
     console.log(data);
     // addData(data);
   }
@@ -186,10 +187,10 @@ class Indexes extends PureComponent{
     }
   }
 
-  toggleAddModal = () => {
-    this.setState({
-      isModalShown: !this.state.isModalShown
-    });
+  toggleModal = () => {
+    this.setState(state => ({
+      isModalShown: !state.isModalShown
+    }));
     // if (!this.state.isModalShown){
     //   this.setState({
     //     selectedNode: null
@@ -210,8 +211,12 @@ class Indexes extends PureComponent{
                         this.setState({
                           currentEmployee: null
                         });
-                        this.toggleAddModal(); } }>Add</Button>
-              <Table {...this.state.tableStyles} columns={columns} dataSource={data} onChange={this.onChangeTable}/>
+                        this.toggleModal(); } }>Add</Button>
+              <TableContext.Provider value={{
+                data: this.state.data
+              }}>
+                <Table {...this.state.tableStyles} columns={columns} dataSource={data} onChange={this.onChangeTable}/>
+              </TableContext.Provider>          
             </div>
         </div>
     );
