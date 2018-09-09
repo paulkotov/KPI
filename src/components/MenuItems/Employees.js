@@ -156,7 +156,7 @@ const columns = [{
               <Button onClick={ () => console.log(record) }>
                 <Icon type="edit" />
               </Button>
-              <Button onClick={ () => console.log(record.id)}>
+              <Button type="danger" onClick={ () => console.log(record.id)}>
                 <Icon type="close-circle" />
               </Button>
             </div>
@@ -197,15 +197,29 @@ class Employees extends Component {
 
   async componentDidMount(){
     // const { addData } = this.props.services;
-    const data = await loadEmplDataById(1);
-    console.log(data);
+    let data = [];
+    try{
+      for(let i=1; i<11; ++i){
+        data.push(await loadEmplDataById(i));
+      }
+    } catch(e){
+      console.log(e);
+    }
+    // data.push(await loadEmplDataById(999));
+    console.log(await loadEmplDataById(1));
+    // console.log(data);
     // addData(data);
+    // this.setState({
+    //   data: this.props.data,
+    //   initialData: this.props.data
+    // });
   }
 
   componentDidUpdate(prevProps){
     if(this.props.data !== prevProps.data){
       this.setState({
-        data: this.props.data
+        data: this.props.data,
+
       });
     }
   }

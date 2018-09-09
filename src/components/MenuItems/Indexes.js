@@ -26,7 +26,7 @@ const columns = [{
   key: 'number',
   width: 80,
   sorter: (a, b) => a.number - b.number,
-},{
+}, {
   title: 'КПЭ',
   dataIndex: 'kpe',
   key: 'kpe',
@@ -142,7 +142,7 @@ const columns = [{
               <Button onClick={ () => console.log(record) }>
                 <Icon type="edit" />
               </Button>
-              <Button onClick={ () => console.log(record.id)}>
+              <Button type="danger" onClick={ () => console.log(record.id)}>
                 <Icon type="close-circle" />
               </Button>
             </div>

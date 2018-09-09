@@ -76,7 +76,7 @@ class MainComp extends PureComponent{
  
   render(){
     return(
-      <div style={{ width: 100+'%' }}>
+      <div style={{ width: 'auto' }}>
         { this.renderMenu() }
       </div>
     );
