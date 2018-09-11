@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+// import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { Form, Row, Input, Button } from 'antd';
+import { Form, Row, Input, Button, Switch } from 'antd';
 
 import 'antd/lib/input/style/index.css';
+import 'antd/lib/switch/style/index.css';
 import '../style.css';
 import '../MenuItems/users.css';
 import 'antd/dist/antd.css';
@@ -16,10 +18,11 @@ class SearchPanel extends Component {
     expand: false,
   };
 
-  handleSearch = (e) => {
+  handleSearch = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log('Received values of form: ', values);
+      // console.log('Received values of form: ', values);
+      this.props.handler(values);
     });
   }
 
@@ -28,30 +31,31 @@ class SearchPanel extends Component {
   }
 
   toggle = () => {
-    const { expand } = this.state;
-    this.setState({ expand: !expand });
+    // const { expand } = this.state;
+    this.setState({ expand : !this.state.expand });
+    // console.log(change.value);
   }
 
   render(){
     const { getFieldDecorator } = this.props.form;
-    // return(
-    //   <div style={{ heigth: 100+'px', padding: 10+'px' }}>
-    //     <Search
-    //       placeholder="input search text"
-    //       onSearch={value => console.log(value)}
-    //       enterButton
-    //     />
-    //   </div>
-    // );
     return(
-      <Form
-        className="search-form"
-        onSubmit={this.handleSearch}
-      >
-        <Row gutter={16}
-              className="search-form-row" 
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-            <h2>Поиск</h2> 
+      <React.Fragment>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'baseline' }}>
+          <div style={{ paddingRight: 20+'px' }}>
+            <h2>Поиск</h2>
+          </div>
+          <div onClick={this.toggle} style={{ paddingLeft: 20+'px' }}>
+          <Switch checked={ this.state.expand } onChange={ this.toggle }/>
+          </div>
+        </div>
+        {this.state.expand && 
+        <Form
+          className="search-form"
+          onSubmit={this.handleSearch}
+        >
+          <Row gutter={16}
+            className="search-form-row" 
+            style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'baseline' }}>
             <FormItem label="ФИО">
               {getFieldDecorator('fio', {
                 rules: [{
@@ -80,13 +84,16 @@ class SearchPanel extends Component {
                 </Button>            
               </div>
             </FormItem>
-        </Row>
-      </Form>
+          </Row>
+        </Form>
+        }
+      </React.Fragment>
     );
   }
 }
 
 SearchPanel.propTypes = {
+  handler: PropTypes.func,
   form: PropTypes.object
 };
 

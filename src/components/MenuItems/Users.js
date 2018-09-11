@@ -234,17 +234,6 @@ class Users extends PureComponent{
     });
   }
 
-  // onCellChange = (key, dataIndex) => {
-  //   return (value) => {
-  //     const dataSource = [...this.state.dataSource];
-  //     const target = dataSource.find(item => item.key === key);
-  //     if (target) {
-  //       target[dataIndex] = value;
-  //       this.setState({ dataSource });
-  //     }
-  //   };
-  // }
-
   onDelete = key => {
     const data= [...this.state.data.savedData];
     this.setState({ data: { savedData: data.filter(item => item.key !== key) } });
@@ -275,28 +264,6 @@ class Users extends PureComponent{
     });
   }
 
-  // handleAdd = () => {
-
-  //   return(
-  //     <div>
-
-  //     </div>
-  //   );
-  // }
-  // newUser = user => {
-  //   const { dataSource } = this.state;
-  //   console.log(user);
-  //   let newUser = {
-  //     name: user.name,
-  //     otch: user.otch,
-  //     surname: user.otch,
-  //     dep: user.dep,
-  //     password: user.password,
-  //     login: user.login,
-  //   };
-
-  //   this.setState({ dataSource: [...dataSource, newUser] });
-  // }
   handleSave = () => {
     let users = this.state.data.selectedRows;
     users.map( async item => {
@@ -334,10 +301,10 @@ class Users extends PureComponent{
       tableStyles: { ...this.state.tableStyles, pagination: pager, sorter: sorter }
 
     });
-
   }
-  handleFilter = () => {
-    console.log('Filter');
+
+  handleFilter = filter => {
+    console.log(filter);
   }
 
   render(){
