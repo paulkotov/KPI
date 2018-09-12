@@ -86,52 +86,82 @@ class Users extends PureComponent{
     title: '№',
     dataIndex: 'id',
     key: 'id',
-    width: 200
+    width: 200,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Логин',
     dataIndex: 'login',
     key: 'login',
-    width: 500
+    width: 500,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Пароль',
     dataIndex: 'password',
     key: 'password',
-    width: 600
+    width: 600,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Роль',
     dataIndex: 'role',
     key: 'role',
-    width: 600
+    width: 600,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Организация',
     dataIndex: 'org',
     key: 'org',
-    width: 600
+    width: 600,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'ФИО',
     dataIndex: 'name',
     key: 'name',
-    width: 600
+    width: 600,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Подразделение',
     dataIndex: 'dept',
     key: 'dept',
-    width: 600
+    width: 600,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Должность',
     dataIndex: 'pos',
     key: 'pos',
     width: 600,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>);
+    }  
   }, {
     title: 'Контакты',
     dataIndex: 'contacts',
     key: 'contacts',
-    width: 600
+    width: 600,
+    render: text => { 
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>); 
+    }
   }, {
     title: 'Права',
     dataIndex: 'rules',
     key: 'rules',
-    width: 400
+    width: 400,
+    render: text => {
+      return (!!text ? <span>{text}</span> : <span>{' '}</span>); 
+    }
   }, {
     title: 'Действия',
     dataIndex: 'actions',
@@ -139,7 +169,7 @@ class Users extends PureComponent{
     width: 400,
     render: (text, record) => {
       return (
-        <div>
+        <React.Fragment>
           <Button size="small" onClick={ () => {
             this.setState({ currentUser: record });
             this.toggleAddModal();
@@ -154,7 +184,7 @@ class Users extends PureComponent{
             </Popconfirm>
           ) : null}
 
-        </div>
+        </React.Fragment>
       );
     },
   }];
@@ -299,7 +329,6 @@ class Users extends PureComponent{
     pager.current = pagination.current;
     this.setState({
       tableStyles: { ...this.state.tableStyles, pagination: pager, sorter: sorter }
-
     });
   }
 
@@ -337,9 +366,10 @@ class Users extends PureComponent{
         {
           isAddModalShown &&
           <UserModal isAddModalShown={isAddModalShown}
+            title={currentUser === null ? 'Добавить пользователя' : 'Редактировать пользователя'}
             toggleAddModal={this.toggleAddModal}
             dataHandler={this.handleAdd}
-            data={currentUser === null ? newUser : currentUser }
+            data={currentUser === null ? newUser : currentUser}
             rules={this.state.data.depts}                
           />
         }

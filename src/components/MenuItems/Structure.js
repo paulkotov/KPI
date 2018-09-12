@@ -115,7 +115,7 @@ class Structure extends PureComponent {
         { isEditModalShown && selectedNode !== 'null' &&
           <StructureModal isEditModalShown={isEditModalShown} 
             toggleEditModal={this.toggleEditModal} 
-            nodeHandler={null}
+            nodeHandler={this.handleAdd}
             data={selectedNode}
             title={modalTitle}
           /> 
@@ -143,7 +143,6 @@ class Structure extends PureComponent {
             >
               &lt;
             </button>
-
             <button
               type="submit"
               disabled={!searchFoundCount}
@@ -151,7 +150,6 @@ class Structure extends PureComponent {
             >
               &gt;
             </button>
-
             <span>
               &nbsp;
               {searchFoundCount > 0 ? searchFocusIndex + 1 : 0}

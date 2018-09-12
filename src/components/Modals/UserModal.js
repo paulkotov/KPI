@@ -44,12 +44,12 @@ class UserModal extends Component {
   }
 
   render() {
-    const { isAddModalShown, toggleAddModal, rules } = this.props;
+    const { isAddModalShown, toggleAddModal, rules, title } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { login, password, id, role, dept, pos, name, otch, surname  } = this.props.data;
     return (
       <Modal
-        title="Add user"
+        title={title}
         width={1000}
         style={{ top: 20 }}
         visible={isAddModalShown}
@@ -76,7 +76,7 @@ class UserModal extends Component {
                 <label>Пароль</label>
                 {getFieldDecorator('password', {
                   initialValue: password,
-                  rules: [{ required: true, message: 'Please input your Password!' }],
+                  rules: [{ required: true, message: 'Введите пароль' }],
                 })(
                     <Input type="password"/>
                 )}
@@ -88,7 +88,7 @@ class UserModal extends Component {
                   rules: [{ type: 'string', required: false }],
                 })(
                     <Select style={{ width: 300 }} onChange={ value => this.setState({ user: { role: value } })}>
-                      <Option key={"All"} value="All">All</Option>
+                      <Option key={'All'} value="All">All</Option>
                       {rules.map( (item, idx) => 
                         <Option key={idx} value={`${item.id}.${item.name}`}>
                           {`${item.id}. ${item.name}`}
@@ -206,6 +206,7 @@ UserModal.propTypes = {
   data: PropTypes.object,
   rules: PropTypes.array,
   dataHandler: PropTypes.func,
+  title: PropTypes.string,
   form: PropTypes.object
 };
 
