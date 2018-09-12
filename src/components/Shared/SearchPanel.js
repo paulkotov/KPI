@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Form, Row, Input, Button, Switch } from 'antd';
@@ -12,6 +12,12 @@ import 'antd/dist/antd.css';
 // const Search = Input.Search;
 
 const FormItem = Form.Item;
+const SearchPanelContainer = styled.div`
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: flex-end; 
+  padding: 10+'px'
+`;
 
 class SearchPanel extends Component {
   state = {
@@ -40,12 +46,12 @@ class SearchPanel extends Component {
     const { getFieldDecorator } = this.props.form;
     return(
       <React.Fragment>
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'baseline' }}>
-          <div style={{ paddingRight: 20+'px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+          <div style={{ paddingTop: 6+'px' }}>
             <h2>Поиск</h2>
           </div>
           <div onClick={this.toggle} style={{ paddingLeft: 20+'px' }}>
-          <Switch checked={ this.state.expand } onChange={ this.toggle }/>
+            <Switch checked={ this.state.expand } onChange={ this.toggle }/>
           </div>
         </div>
         {this.state.expand && 
@@ -55,7 +61,7 @@ class SearchPanel extends Component {
         >
           <Row gutter={16}
             className="search-form-row" 
-            style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'baseline' }}>
+            style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', padding: 10+'px' }}>
             <FormItem label="ФИО">
               {getFieldDecorator('fio', {
                 rules: [{
