@@ -1,3 +1,18 @@
 h1, p {
   font-family: Lato;
 }
+
+.main {
+  display: inline-block;
+}
+
+.container {
+  display: flex; 
+  width: auto;
+}
+
+.component {
+  width: 85vw;
+  overflow-x: auto;
+  padding: 10px;
+}

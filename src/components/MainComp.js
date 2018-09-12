@@ -11,6 +11,8 @@ import Summary from './MenuItems/Summary';
 import Settings from './MenuItems/Settings';
 import Loadable from 'react-loadable';
 
+import './style.css';
+
 const UserComp = Loadable({
   loader: () => import('./MenuItems/Users'),
   loading: () => null,
@@ -76,7 +78,7 @@ class MainComp extends PureComponent{
  
   render(){
     return(
-      <div style={{ width: 'auto' }}>
+      <div className="component">
         { this.renderMenu() }
       </div>
     );
