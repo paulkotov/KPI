@@ -11,6 +11,7 @@ import Main from './Main';
 import { isUserUnLogged } from '../lib/api';
 import * as authActions from '../redux/actions/auth';
 import * as menuActions from '../redux/actions/menu';
+import '../components/style.css';
 
 class App extends React.Component {
   state = {
@@ -28,7 +29,8 @@ class App extends React.Component {
   renderApp = (user, menu, menuActions, authActions) => (
     <div className="main">
       <Header user={ user } menu={ menu } logout={ authActions.logout }/>
-      <div className="container" style={{ display: 'flex', width: 100+'%' }}>
+      <hr/>
+      <div className="container">
         <SideMenu menu={ menu } changeMenu={menuActions.changeMenu} />
         <Main />
       </div>
